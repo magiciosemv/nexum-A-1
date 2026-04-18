@@ -1,0 +1,10 @@
+# Claude Code
+.claude/
+
+# Windows Zone.Identifier
+*:Zone.Identifier
+
+# Development process docs
+findings.md
+progress.md
+task_plan.md

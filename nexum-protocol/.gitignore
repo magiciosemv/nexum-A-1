@@ -6,3 +6,23 @@ node_modules
 test-ledger
 .yarn
 .surfpool
+
+# Build artifacts
+.next/
+dist/
+*.tsbuildinfo
+
+# Circuit generated files
+circuits/build/
+circuits/keys/
+
+# Generated binaries
+app/public/*.wasm
+app/public/*.zkey
+app/public/verification_key.json
+
+# Development process docs
+DEPLOY_NOTES.md
+FINAL_AUDIT.md
+G9_anchor_test_record.md
+KNOWN_ISSUES.md
