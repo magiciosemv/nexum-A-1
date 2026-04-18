@@ -1,0 +1,23 @@
+{
+  "name": "@nexum/sdk",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@noble/curves": "^1.4.0",
+    "@solana/web3.js": "^1.91.0",
+    "@coral-xyz/anchor": "^0.30.0",
+    "snarkjs": "^0.7.6"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "ts-node": "^10.9.0"
+  }
+}

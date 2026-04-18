@@ -1,0 +1,62 @@
+{
+  "address": "EArRMxL5MSNTXRt4D9wv5MfrXYifhUSzAXbUiaqKMt3U",
+  "metadata": {
+    "name": "zk_verifier",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "verify_balance_transition",
+      "docs": [
+        "Verify a balance_transition Groth16 proof on-chain",
+        "proof_bytes: 256 bytes (A:64 + B:128 + C:64)",
+        "pub_inputs:  30 × 32 = 960 bytes (LE BN254 scalars)"
+      ],
+      "discriminator": [
+        118,
+        20,
+        109,
+        87,
+        73,
+        234,
+        70,
+        186
+      ],
+      "accounts": [],
+      "args": [
+        {
+          "name": "proof_bytes",
+          "type": {
+            "array": [
+              "u8",
+              256
+            ]
+          }
+        },
+        {
+          "name": "pub_inputs",
+          "type": "bytes"
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidPublicInputsLength",
+      "msg": "Public inputs length must be 30 × 32 bytes"
+    },
+    {
+      "code": 6001,
+      "name": "AltBn128Error",
+      "msg": "alt_bn128 syscall failed"
+    },
+    {
+      "code": 6002,
+      "name": "ProofInvalid",
+      "msg": "ZK proof verification failed: pairing check rejected"
+    }
+  ]
+}

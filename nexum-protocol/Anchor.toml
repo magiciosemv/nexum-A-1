@@ -1,0 +1,28 @@
+[toolchain]
+package_manager = "yarn"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.devnet]
+audit_gate = "6HTRUo1nAKHUCjWD356kdzryBVv6nEX4z8PsaxBpYhBn"
+nexum_pool = "DUkGn7AM3843JEPs9cJ658tbfsahsBnWph4htyqHQLc6"
+zk_verifier = "7GS3tSuFc9W9dFgLzoz5XMxsmDDWYf7s6AJ6oQ5vqCg2"
+
+[programs.localnet]
+audit_gate = "6eDHCsfJxJyXvtoccuzrbHuHb8PZ21cVeppphC3Xem6H"
+nexum_pool = "BpsDqXMPwPz8rpktTec4cnpCtxxj7J1nsU8F45KLVrEN"
+zk_verifier = "EArRMxL5MSNTXRt4D9wv5MfrXYifhUSzAXbUiaqKMt3U"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 \"tests/**/*.ts\""
+
+[hooks]

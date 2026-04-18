@@ -1,0 +1,374 @@
+{
+  "address": "6eDHCsfJxJyXvtoccuzrbHuHb8PZ21cVeppphC3Xem6H",
+  "metadata": {
+    "name": "audit_gate",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "initialize_registry",
+      "docs": [
+        "Initialize the auditor registry (one-time)"
+      ],
+      "discriminator": [
+        189,
+        181,
+        20,
+        17,
+        174,
+        57,
+        249,
+        59
+      ],
+      "accounts": [
+        {
+          "name": "auditor_registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  117,
+                  100,
+                  105,
+                  116,
+                  111,
+                  114,
+                  95,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "register_auditor",
+      "docs": [
+        "Register a new auditor (admin only)"
+      ],
+      "discriminator": [
+        27,
+        109,
+        11,
+        191,
+        172,
+        108,
+        132,
+        71
+      ],
+      "accounts": [
+        {
+          "name": "auditor_registry",
+          "writable": true
+        },
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "new_auditor"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "request_audit",
+      "docs": [
+        "Request audit of a settlement (creates permanent on-chain record)"
+      ],
+      "discriminator": [
+        176,
+        72,
+        227,
+        49,
+        39,
+        150,
+        162,
+        40
+      ],
+      "accounts": [
+        {
+          "name": "audit_log",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  117,
+                  100,
+                  105,
+                  116,
+                  95,
+                  108,
+                  111,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "settlement_id"
+              },
+              {
+                "kind": "account",
+                "path": "auditor"
+              },
+              {
+                "kind": "arg",
+                "path": "params.nonce"
+              }
+            ]
+          }
+        },
+        {
+          "name": "settlement_id"
+        },
+        {
+          "name": "auditor_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  117,
+                  100,
+                  105,
+                  116,
+                  111,
+                  114,
+                  95,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "auditor",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "RequestAuditParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "revoke_auditor",
+      "docs": [
+        "Revoke an auditor (admin only)"
+      ],
+      "discriminator": [
+        211,
+        3,
+        163,
+        88,
+        50,
+        133,
+        79,
+        124
+      ],
+      "accounts": [
+        {
+          "name": "auditor_registry",
+          "writable": true
+        },
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "auditor_to_revoke",
+          "type": "pubkey"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "AuditLog",
+      "discriminator": [
+        230,
+        207,
+        176,
+        233,
+        170,
+        130,
+        101,
+        244
+      ]
+    },
+    {
+      "name": "AuditorRegistry",
+      "discriminator": [
+        249,
+        182,
+        230,
+        104,
+        221,
+        122,
+        240,
+        18
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "AuditorNotRegistered",
+      "msg": "Auditor not registered"
+    },
+    {
+      "code": 6001,
+      "name": "AuditorAlreadyRegistered",
+      "msg": "Auditor already registered"
+    },
+    {
+      "code": 6002,
+      "name": "Unauthorized",
+      "msg": "Only admin can register auditors"
+    },
+    {
+      "code": 6003,
+      "name": "AuditAlreadyExists",
+      "msg": "Audit log already exists for this settlement"
+    }
+  ],
+  "types": [
+    {
+      "name": "AuditLog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "settlement_id",
+            "type": "pubkey"
+          },
+          {
+            "name": "auditor",
+            "type": "pubkey"
+          },
+          {
+            "name": "request_slot",
+            "type": "u64"
+          },
+          {
+            "name": "request_timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "reason_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "jurisdiction",
+            "type": "u8"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AuditorRegistry",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "auditors",
+            "type": {
+              "vec": "pubkey"
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RequestAuditParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "nonce",
+            "type": "u64"
+          },
+          {
+            "name": "reason_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "jurisdiction",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}
